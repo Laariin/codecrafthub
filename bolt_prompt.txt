@@ -1,0 +1,30 @@
+Create a single-file HTML dashboard (HTML, CSS and vanilla JavaScript in ONE index.html, no frameworks, no build step) called "CodeCraftHub – Course Dashboard" for administrators to manage course listings through an existing REST API.
+
+BACKEND
+- Base URL: const API_BASE_URL = "http://localhost:5000/api/courses";  (keep this as one constant at the top of the script so it is easy to change)
+- Endpoints:
+  GET    /api/courses            -> list all courses (supports ?search=text and ?status=...)
+  GET    /api/courses/{id}       -> one course
+  POST   /api/courses            -> create
+  PUT    /api/courses/{id}       -> update
+  DELETE /api/courses/{id}       -> delete
+  GET    /api/courses/stats      -> { total, by_status: { "Not Started", "In Progress", "Completed" } }
+- Every response is JSON: success -> { "success": true, "message"?: string, "data": ... }
+  error -> { "success": false, "error": string, "details"?: [string] }
+- Course object: { id, name, description, target_date (YYYY-MM-DD), status, created_at }
+- status must be one of: "Not Started", "In Progress", "Completed"
+
+FEATURES
+1. Header with the app title and an API connection indicator (green "Connected" / red "API offline").
+2. Stats cards: Total, Not Started, In Progress, Completed (from /stats; refresh after every change).
+3. Form to add a course: name, description (textarea), target date (date input), status (select). Client-side validation: all fields required. On success reset the form.
+4. Course table: Name, Description, Target Date, Status (coloured badge), Created, Actions (Edit, Delete).
+5. Edit: clicking Edit loads the course into the same form, the button becomes "Update Course" and a "Cancel" button appears; submit sends PUT.
+6. Delete: ask for confirmation, then send DELETE.
+7. Search box and status filter above the table.
+8. Toast notifications for success and errors; show the API "error" and "details" messages. Show a friendly message if the API cannot be reached (server not running or CORS).
+9. Loading and empty states ("No courses yet").
+10. Escape all user text before inserting into the DOM.
+
+DESIGN
+Clean, modern, responsive layout; light background, card style sections, blue primary colour, readable on mobile.
